@@ -61,3 +61,13 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+/bin/
+
+#Eclipse
+.classpath
+*.prefs
+
+#IntelliJ IDEA
+.idea/
+*.iml
