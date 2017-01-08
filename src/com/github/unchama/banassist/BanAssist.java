@@ -10,7 +10,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import org.bukkit.entity.Player;
+import net.md_5.bungee.api.ChatColor;
+
+import org.bukkit.Bukkit;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -52,14 +55,17 @@ public class BanAssist extends JavaPlugin {
 					kicks.add(UUID.fromString((String) jsonObject.get("uuid")));
 				}
 			}
+			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "BanAssistチェックリストの読み込みに成功");
 		} catch (Exception e) {
+			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "BanAssistチェックリストの読み込みに失敗");
 			e.printStackTrace();
 		}
 	}
 
-	public void banCheck(Player p) {
-		if (kicks.contains(p.getUniqueId())) {
-			p.kickPlayer("Compromised Accountのためこのサーバーには参加できません。");
+	public void banCheck(PlayerLoginEvent event) {
+		if (kicks.contains(event.getPlayer().getUniqueId())) {
+			event.disallow(PlayerLoginEvent.Result.KICK_OTHER,ChatColor.YELLOW + "Compromised Account判定を受けたアカウントを用いての参加はできません");
+			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "Compromised Account -> " + event.getPlayer().getName());
 		}
 	}
 

@@ -13,6 +13,6 @@ public class BanAssistListener implements Listener {
 
 	@EventHandler
 	public void onplayerJoinEvent(PlayerLoginEvent event) {
-		parent.banCheck(event.getPlayer());
+		parent.banCheck(event);
 	}
 }
