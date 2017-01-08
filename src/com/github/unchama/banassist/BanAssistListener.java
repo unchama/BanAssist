@@ -2,7 +2,7 @@ package com.github.unchama.banassist;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 public class BanAssistListener implements Listener {
 	private BanAssist parent;
@@ -12,7 +12,7 @@ public class BanAssistListener implements Listener {
 	}
 
 	@EventHandler
-	public void onplayerJoinEvent(PlayerJoinEvent event) {
+	public void onplayerJoinEvent(PlayerLoginEvent event) {
 		parent.banCheck(event.getPlayer());
 	}
 }
