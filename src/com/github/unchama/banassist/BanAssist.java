@@ -6,21 +6,27 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import com.github.unchama.banassist.command.ignoreCommand;
 import com.github.unchama.banassist.util.Config;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class BanAssist extends JavaPlugin {
+	private HashMap<String, TabExecutor> commandlist = new HashMap<String, TabExecutor>();
 	public static Config config;
 	public List<UUID> kicks;
 
@@ -35,6 +41,9 @@ public class BanAssist extends JavaPlugin {
 		// リスナー登録
 		getServer().getPluginManager().registerEvents(new BanAssistListener(this), this);
 
+		// コマンドの登録
+		commandlist.put("ignore", new ignoreCommand(this));
+
 		kicks = new ArrayList<UUID>();
 		// HTTP通信でJSONデータを取得
 		try {
@@ -48,6 +57,7 @@ public class BanAssist extends JavaPlugin {
 
 			// 不要な配列[]を除去、},{でsplitするために一時トークンを付与
 			String[] banlist = jstr.replace("[", "").replace("]", "").replace("},{", "}},{{").split(Pattern.quote("},{"));
+//			String[] banlist = {"{\"uuid\":\"58baabf2-4a5f-4906-b6ec-0af2b832688e\", \"name\":\"CrossHearts\", \"reason\":\"Compromised Account\"}"};
 			// 各プレイヤーに対してチェック
 			for (String p : banlist) {
 				JSONObject jsonObject = (JSONObject) new JSONParser().parse(p);
@@ -63,13 +73,22 @@ public class BanAssist extends JavaPlugin {
 	}
 
 	public void banCheck(PlayerLoginEvent event) {
-		if (kicks.contains(event.getPlayer().getUniqueId())) {
-			event.disallow(PlayerLoginEvent.Result.KICK_OTHER,ChatColor.YELLOW + "Compromised Account判定を受けたアカウントを用いての参加はできません");
+		if (kicks.contains(event.getPlayer().getUniqueId()) && !isIgnore(event.getPlayer().getName())) {
+			event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.YELLOW + "Compromised Account判定を受けたアカウントを用いての参加はできません");
 			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "Compromised Account -> " + event.getPlayer().getName());
 		}
 	}
 
 	@Override
 	public void onDisable() {
+	}
+
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		return commandlist.get(cmd.getName()).onCommand(sender, cmd, label, args);
+	}
+
+	public boolean isIgnore(String name) {
+		return config.getIgnore().contains(name);
 	}
 }
