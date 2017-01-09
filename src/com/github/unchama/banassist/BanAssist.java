@@ -74,9 +74,8 @@ public class BanAssist extends JavaPlugin {
 
 	public void banCheck(PlayerLoginEvent event) {
 		if (kicks.contains(event.getPlayer().getUniqueId()) && !isIgnore(event.getPlayer().getName())) {
-			event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "You have been banned! / Reason : Compromised Account\n"
-					+ ChatColor.RESET + ChatColor.WHITE + "お使いのアカウントは不正アカウントである可能性がある為\n"
-					+ "当サーバへのログインが禁止されています\n"
+			event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "[ Access Denied! / Reason : Compromised Account ]\n"
+					+ ChatColor.RESET + ChatColor.WHITE + "お使いのアカウントは不正アカウントである可能性があります\n"
 					+ "正規アカウントを使用している場合はお問い合わせフォームまでお知らせ下さい"
 					);
 			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "Compromised Account -> " + event.getPlayer().getName());
