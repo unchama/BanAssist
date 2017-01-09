@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -22,8 +24,6 @@ import org.json.simple.parser.JSONParser;
 
 import com.github.unchama.banassist.command.ignoreCommand;
 import com.github.unchama.banassist.util.Config;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class BanAssist extends JavaPlugin {
 	private HashMap<String, TabExecutor> commandlist = new HashMap<String, TabExecutor>();
@@ -74,7 +74,11 @@ public class BanAssist extends JavaPlugin {
 
 	public void banCheck(PlayerLoginEvent event) {
 		if (kicks.contains(event.getPlayer().getUniqueId()) && !isIgnore(event.getPlayer().getName())) {
-			event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.YELLOW + "Compromised Account判定を受けたアカウントを用いての参加はできません");
+			event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "You have been banned! / Reason : Compromised Account\n"
+					+ ChatColor.RESET + ChatColor.WHITE + "お使いのアカウントは不正アカウントである可能性がある為\n"
+					+ "当サーバへのログインが禁止されています\n"
+					+ "正規アカウントを使用している場合はお問い合わせフォームまでお知らせ下さい"
+					);
 			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "Compromised Account -> " + event.getPlayer().getName());
 		}
 	}
