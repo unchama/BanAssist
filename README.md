@@ -21,4 +21,5 @@ https://www.dropbox.com/s/s680ogoyndczqxx/BanAssist.jar?dl=0<br>
 <br>
 # SpecialThanks
 当リポジトリは、CrossHearts氏が作成したコードをご厚意でunchamaが譲り受けたものです。<br>
+また、Compromised Accountの判定にJPMCPvPの処罰リストを有難く利用させて頂いております。<br>
 この場をお借りして、感謝申し上げます。
