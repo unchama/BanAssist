@@ -5,6 +5,7 @@
 config.ymlで指定したjsonファイルからcompromised accountのみを抽出し、アクセスを禁止するプラグイン。<br>
 初期設定ではJPMCPvPが公開している処罰リストをお借りしています。<br>
 誤検知も考慮して、/ignoreコマンドでプレイヤーを追加するとCompromised accountであっても除外処理されます。<br>
+判定リストの更新は起動時のみ行っておりますので、自動再起動プラグインとの併用がお勧めです。<br>
 <br>
 # コマンドリファレンス
 除外リストにプレイヤーを追加：/ignore add [name]<br>
