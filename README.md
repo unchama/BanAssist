@@ -5,13 +5,15 @@
 config.ymlで指定したjsonファイルからcompromised accountのみを抽出し、アクセスを禁止するプラグイン。<br>
 初期設定ではJPMCPvPが公開している処罰リストをお借りしています。<br>
 誤検知も考慮して、/ignoreコマンドでプレイヤーを追加するとCompromised accountであっても除外処理されます。<br>
-
+<br>
 # コマンドリファレンス
 除外リストにプレイヤーを追加：/ignore add [name]<br>
 除外リストからプレイヤーを削除：/ignore rem [name]<br>
 除外リストに登録されている全プレイヤーを列挙：/ignore list<br>
 対象プレイヤーが除外リストにあるかどうか確認：/ignore find [name]<br>
 <br>
+# 動作環境
+spigot-1.10.2にて動作確認済みです。他の環境で動くか分かりませんが、まぁたぶん動くでしょう(適当)。<br>
 # SpecialThanks
 当リポジトリは、CrossHearts氏が作成したコードをご厚意でunchamaが譲り受けたものです。<br>
 この場をお借りして、感謝申し上げます。
