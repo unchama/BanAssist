@@ -14,6 +14,11 @@ config.ymlで指定したjsonファイルからcompromised accountのみを抽�
 <br>
 # 動作環境
 spigot-1.10.2にて動作確認済みです。他の環境で動くか分かりませんが、まぁたぶん動くでしょう(適当)。<br>
+<br>
+# Download
+ver0.1.2 2017/01/10<br>
+https://www.dropbox.com/s/s680ogoyndczqxx/BanAssist.jar?dl=0<br>
+<br>
 # SpecialThanks
 当リポジトリは、CrossHearts氏が作成したコードをご厚意でunchamaが譲り受けたものです。<br>
 この場をお借りして、感謝申し上げます。
