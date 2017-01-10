@@ -19,6 +19,7 @@ spigot-1.10.2にて動作確認済みです。他の環境で動くか分かり�
 # Download
 ver0.1.2 2017/01/10<br>
 https://www.dropbox.com/s/s680ogoyndczqxx/BanAssist.jar?dl=0<br>
+※java1.8環境でコンパイルしたものです。1.7以前の環境で動作させる場合はソースコードからコンパイルし直せば使える筈。<br>
 <br>
 # SpecialThanks
 当リポジトリは、CrossHearts氏が作成したコードをご厚意でunchamaが譲り受けたものです。<br>
