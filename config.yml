@@ -1,3 +1,3 @@
 ﻿json: 'https://pvp.minecraft.jp/punishments/banned-players.json'
-ignore:
+names:
 - unchama

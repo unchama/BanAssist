@@ -5,13 +5,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
-
-import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -25,29 +21,23 @@ import org.json.simple.parser.JSONParser;
 import com.github.unchama.banassist.command.ignoreCommand;
 import com.github.unchama.banassist.util.Config;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class BanAssist extends JavaPlugin {
-	private HashMap<String, TabExecutor> commandlist = new HashMap<String, TabExecutor>();
-	public static Config config;
-	public List<UUID> kicks;
+	private static Map<String, TabExecutor> commandlist = new LinkedHashMap<String, TabExecutor>();
+	private static Map<String, String> kicks = new LinkedHashMap<String, String>();
 
 	@Override
 	public void onEnable() {
-		// コンフィグ読み込み
-		config = new Config(this);
-		config.loadConfig();
-//		System.out.println("debug");
-
-		// 各packageの初期化
 		// リスナー登録
-		getServer().getPluginManager().registerEvents(new BanAssistListener(this), this);
-
+		getServer().getPluginManager().registerEvents(new BanAssistListener(), this);
 		// コマンドの登録
-		commandlist.put("ignore", new ignoreCommand(this));
+		commandlist.put("ignore", new ignoreCommand());
+		new Config(this);
 
-		kicks = new ArrayList<UUID>();
 		// HTTP通信でJSONデータを取得
 		try {
-			URL url = new URL(config.getJsonUrl());
+			URL url = new URL(Config.getJsonUrl());
 			URLConnection urlCon = url.openConnection();
 			// 403回避のためユーザーエージェントを登録
 			urlCon.setRequestProperty("User-Agent", "BanAssist");
@@ -62,7 +52,7 @@ public class BanAssist extends JavaPlugin {
 			for (String p : banlist) {
 				JSONObject jsonObject = (JSONObject) new JSONParser().parse(p);
 				if (jsonObject.get("reason").equals("Compromised Account")) {
-					kicks.add(UUID.fromString((String) jsonObject.get("uuid")));
+					kicks.put((String) jsonObject.get("uuid"), (String) jsonObject.get("name"));
 				}
 			}
 			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "BanAssistチェックリストの読み込みに成功");
@@ -72,13 +62,26 @@ public class BanAssist extends JavaPlugin {
 		}
 	}
 
-	public void banCheck(PlayerLoginEvent event) {
-		if (kicks.contains(event.getPlayer().getUniqueId()) && !isIgnore(event.getPlayer().getName())) {
-			event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "[ Access Denied! / Reason : Compromised Account ]\n"
-					+ ChatColor.RESET + ChatColor.WHITE + "お使いのアカウントは不正アカウントである可能性があります\n"
-					+ "正規アカウントを使用している場合はお問い合わせフォームまでお知らせ下さい"
-					);
-			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "Compromised Account -> " + event.getPlayer().getName());
+	public static void banCheck(PlayerLoginEvent event) {
+		String name = event.getPlayer().getName();
+		String uuid = event.getPlayer().getUniqueId().toString();
+		// UUIDがキックリストに含まれている場合
+		if (kicks.containsKey(uuid)) {
+			// UUIDが除外リストに含まれていない場合
+			if (!Config.getUUIDs().contains(uuid)) {
+				// 名前が除外リストに含まれていない場合
+				if (!Config.getNames().contains(name)) {
+					// キック
+					event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "[ Access Denied! / Reason : Compromised Account ]\n"
+							+ ChatColor.RESET + ChatColor.WHITE + "お使いのアカウントは不正アカウントである可能性があります\n"
+							+ "正規アカウントを使用している場合はお問い合わせフォームまでお知らせ下さい"
+							);
+					Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "Compromised Account -> " + event.getPlayer().getName());
+				} else {
+					// 名前が除外リストに含まれている場合→UUIDの登録待ち
+					Config.setUuid(uuid, name);
+				}
+			}
 		}
 	}
 
@@ -89,9 +92,5 @@ public class BanAssist extends JavaPlugin {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		return commandlist.get(cmd.getName()).onCommand(sender, cmd, label, args);
-	}
-
-	public boolean isIgnore(String name) {
-		return config.getIgnore().contains(name);
 	}
 }
