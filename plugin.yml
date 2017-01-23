@@ -1,6 +1,6 @@
 name: BanAssist
 main: com.github.unchama.banassist.BanAssist
-version: 0.1.2
+version: 0.1.4
 
 commands:
   ignore:
