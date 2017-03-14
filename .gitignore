@@ -71,3 +71,4 @@ $RECYCLE.BIN/
 #IntelliJ IDEA
 .idea/
 *.iml
+.classpath

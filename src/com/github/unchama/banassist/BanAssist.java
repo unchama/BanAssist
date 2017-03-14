@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -20,8 +21,6 @@ import org.json.simple.parser.JSONParser;
 
 import com.github.unchama.banassist.command.ignoreCommand;
 import com.github.unchama.banassist.util.Config;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class BanAssist extends JavaPlugin {
 	private static Map<String, TabExecutor> commandlist = new LinkedHashMap<String, TabExecutor>();
@@ -73,8 +72,7 @@ public class BanAssist extends JavaPlugin {
 				if (!Config.getNames().contains(name)) {
 					// キック
 					event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "[ Access Denied! / Reason : Compromised Account ]\n"
-							+ ChatColor.RESET + ChatColor.WHITE + "お使いのアカウントは不正アカウントである可能性があります\n"
-							+ "正規アカウントを使用している場合はお問い合わせフォームまでお知らせ下さい"
+							+ ChatColor.RESET + ChatColor.WHITE + "お使いのアカウントは不正アカウントの可能性がある為アクセスを拒否されました"
 							);
 					Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "Compromised Account -> " + event.getPlayer().getName());
 				} else {
