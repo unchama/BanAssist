@@ -5,22 +5,28 @@
 config.ymlで指定したjsonファイルからcompromised accountのみを抽出し、アクセスを禁止するプラグイン。<br>
 初期設定ではJPMCPvPが公開している処罰リストをお借りしています。<br>
 誤検知を考慮して、Compromised accountであっても除外する機能を用意しています。<br>
-/ignoreコマンドによりプレイヤー名を追加すると、プレイヤー名が未確定除外リストに登録されます。<br>
+/compignoreコマンドによりプレイヤー名を追加すると、プレイヤー名が未確定除外リストに登録されます。<br>
 以降の該当プレイヤーの初回ログインによりUUIDを登録し、除外を確定します。<br>
 jsonファイルからの読み込みは起動時のみ行っておりますので、自動再起動プラグインとの併用がお勧めです。<br>
 <br>
 # コマンドリファレンス
 ※本コマンドはコンソールまたはオペレータ権限を持つプレイヤーからのみ実行可能です。<br>
-未確定除外リストにプレイヤーを追加：/ignore add [name]<br>
-未確定除外リストからプレイヤーを削除：/ignore rem [name]<br>
-未確定除外リストに登録されている全プレイヤーを列挙：/ignore list<br>
-対象プレイヤーが未確定除外リストにあるかどうか確認：/ignore find [name]<br>
-config.ymlをリロード（除外リスト手動更新用）：/ignore reload<br>
+未確定除外リストにプレイヤーを追加：/compignore add [name]<br>
+未確定除外リストからプレイヤーを削除：/compignore rem [name]<br>
+未確定除外リストに登録されている全プレイヤーを列挙：/compignore list<br>
+対象プレイヤーが未確定除外リストにあるかどうか確認：/compignore find [name]<br>
+config.ymlをリロード（除外リスト手動更新用）：/compignore reload<br>
 <br>
 # 動作環境
 spigot-1.10.2にて動作確認済みです。他の環境で動くか分かりませんが、まぁたぶん動くでしょう(適当)。<br>
+どこぞのお暇なプログラマーさんが適当に改良してプルリク投げてくれるって期待してます。<br>
 <br>
 # Download
+ver0.1.5 2017/03/31 コマンド名称変更(/ignore→/compignore)<br>
+https://w1.minecraftserver.jp/redmine/attachments/download/330/BanAssist-0.1.5.jar<br>
+<br>
+ver0.1.4 uuid仮対応<br>
+<br>
 ver0.1.3 2017/01/10<br>
 https://www.dropbox.com/s/s680ogoyndczqxx/BanAssist.jar?dl=0<br>
 ※java1.8環境でコンパイルしたものです。1.7以前の環境で動作させる場合はソースコードからコンパイルし直せば使える筈。<br>
