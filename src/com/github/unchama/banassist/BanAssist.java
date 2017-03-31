@@ -31,7 +31,7 @@ public class BanAssist extends JavaPlugin {
 		// リスナー登録
 		getServer().getPluginManager().registerEvents(new BanAssistListener(), this);
 		// コマンドの登録
-		commandlist.put("ignore", new ignoreCommand());
+		commandlist.put("compignore", new ignoreCommand());
 		new Config(this);
 
 		// HTTP通信でJSONデータを取得

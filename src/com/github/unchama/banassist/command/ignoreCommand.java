@@ -34,19 +34,19 @@ public class ignoreCommand implements TabExecutor {
 			sender.sendMessage(ChatColor.YELLOW + "Reloaded");
 		} else {
 			sender.sendMessage(ChatColor.RED + "[Usage]");
-			sender.sendMessage(ChatColor.RED + "  /ignoreコマンドにより未確定除外リストにプレイヤー名を登録します。");
+			sender.sendMessage(ChatColor.RED + "  /compignoreコマンドにより未確定除外リストにプレイヤー名を登録します。");
 			sender.sendMessage(ChatColor.RED + "  以降のプレイヤーのログインにより該当するUUIDを登録し、除外を確定します。");
 			sender.sendMessage(ChatColor.RED + "  除外確定後の削除コマンドは用意していません。");
-			sender.sendMessage(ChatColor.RED + "/ignore add <name>");
+			sender.sendMessage(ChatColor.RED + "/compignore add <name>");
 			sender.sendMessage(ChatColor.RED + "  未確定除外リストにプレイヤーを追加します。");
-			sender.sendMessage(ChatColor.RED + "/ignore rem <name>");
+			sender.sendMessage(ChatColor.RED + "/compignore rem <name>");
 			sender.sendMessage(ChatColor.RED + "  未確定除外リストからプレイヤーを削除します。");
 			sender.sendMessage(ChatColor.RED + "  誤登録の削除が目的のため、該当プレイヤーログイン後は削除出来ません。");
-			sender.sendMessage(ChatColor.RED + "/ignore list");
+			sender.sendMessage(ChatColor.RED + "/compignore list");
 			sender.sendMessage(ChatColor.RED + "  未確定除外リストから未ログインのプレイヤー一覧を取得します。");
-			sender.sendMessage(ChatColor.RED + "/ignore find <name>");
+			sender.sendMessage(ChatColor.RED + "/compignore find <name>");
 			sender.sendMessage(ChatColor.RED + "  未確定除外リストから未ログインのプレイヤー名を検索します。");
-			sender.sendMessage(ChatColor.RED + "/ignore reload");
+			sender.sendMessage(ChatColor.RED + "/compignore reload");
 			sender.sendMessage(ChatColor.RED + "  除外リストをリロードします。手動でconfig.ymlを編集した後は必ず実行してください。");
 		}
 		return true;
